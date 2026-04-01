@@ -1,5 +1,7 @@
+.venv/
 output/
 logs/
+scraped_history.txt
 .env
 __pycache__/
 *.pyc

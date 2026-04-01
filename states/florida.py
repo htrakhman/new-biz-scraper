@@ -1,5 +1,7 @@
 """Florida business filings scraper — SFTP + fixed-width parser."""
 
+from __future__ import annotations
+
 import io
 import logging
 from datetime import date, timedelta
