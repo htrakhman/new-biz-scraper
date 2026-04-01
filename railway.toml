@@ -1,0 +1,11 @@
+# Railway config: https://docs.railway.com/reference/config-as-code
+# Cron runs the scraper on a schedule (UTC). Adjust cronSchedule in the dashboard if needed.
+
+[build]
+builder = "RAILPACK"
+
+[deploy]
+startCommand = "python scraper.py"
+restartPolicyType = "NEVER"
+# Weekdays 13:00 UTC ≈ 8am US Eastern (standard time); change in Railway UI for DST if needed
+cronSchedule = "0 13 * * 1-5"

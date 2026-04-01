@@ -1,0 +1,33 @@
+# Deploys this repo to Railway on every push to main.
+#
+# Setup (one-time):
+# 1. Railway → your project → Settings → Tokens → create a Project Token
+# 2. GitHub → repo → Settings → Secrets and variables → Actions → New repository secret:
+#    - RAILWAY_TOKEN = the project token
+#    - RAILWAY_SERVICE = your Railway service name (Settings tab on the service), e.g. "new-biz-scraper"
+#
+# If the service is already connected to this GitHub repo in Railway, Railway will also
+# auto-deploy on push. In that case, skip these secrets to avoid duplicate deployments, OR
+# disconnect GitHub on the service and rely on this workflow only.
+#
+# Alternative without this workflow: Railway dashboard → service → Settings → connect this repo
+# and set the production branch to main (no GitHub secrets required).
+
+name: Deploy to Railway
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ secrets.RAILWAY_TOKEN != '' && secrets.RAILWAY_SERVICE != '' }}
+    container: ghcr.io/railwayapp/cli:latest
+    env:
+      RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Upload and deploy
+        run: railway up --service="${{ secrets.RAILWAY_SERVICE }}" --ci
