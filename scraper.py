@@ -140,7 +140,7 @@ def run_for_date(
             logger.info(f"Dropped {old_dropped} records (amendments/updates, not filed on {target_str})")
 
     # Filter out previously scraped entities
-    seen_ids = load_seen_ids()
+    seen_ids = load_seen_ids(target_date)
     before_filter = len(df)
     if not df.empty and seen_ids:
         df = df[
@@ -163,7 +163,7 @@ def run_for_date(
     if not df.empty:
         for _, row in df.iterrows():
             new_ids.add(make_key(row["source_state"], row["entity_number"]))
-    save_new_ids(new_ids)
+    save_new_ids(new_ids, target_date)
 
     # Summary
     total = len(df)

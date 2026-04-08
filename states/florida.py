@@ -5,7 +5,7 @@ from __future__ import annotations
 import io
 import logging
 from datetime import date, timedelta
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 
 import paramiko
 
@@ -30,7 +30,7 @@ class FloridaScraper(StateScraper):
             return []
         return self._parse_records(raw_data)
 
-    def _download_file(self, target_date: date) -> bytes | None:
+    def _download_file(self, target_date: date) -> Optional[bytes]:
         """Download the daily filing file via SFTP, walking back up to 5 business days."""
         transport = None
         sftp = None
