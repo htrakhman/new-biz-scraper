@@ -6,3 +6,4 @@ scraped_history.txt
 __pycache__/
 *.pyc
 .DS_Store
+scraped_history.txt
